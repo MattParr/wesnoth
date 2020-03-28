@@ -1,0 +1,135 @@
+#If set to no (default), shut_down and restart requests are ignored unless they 
+#come from the fifo.  Set it  to  yes to allow remote shutdown via a /query by 
+#an administrator.
+allow_remote_shutdown={{ default .Env.ALLOW_REMOTE_SHUTDOWN "no" }}
+
+#Full  or  relative path to a (gzip compressed) file that the server can read 
+#and write.  Bans will be saved to this file and read again on server start.
+ban_save_file={{ default .Env.BAN_SAVE_FILE "/opt/ban_save_file" }}
+
+#Determines whether the rooms file should be read and written to in compressed 
+#form. Defaults to yes.
+compress_stored_rooms={{ default .Env.COMPRESS_STORED_ROOMS "yes" }}
+
+#The number of allowed connections from the same IP. 0 means infinite. (default: 5)       
+connections_allowed={{ default .Env.CONNECTIONS_ALLOWED "5" }}
+
+#The message of the day.
+motd={{ default .Env.MOTD "welcome to the nightclub of my mind" }}
+
+#The password used to gain admin privileges (via /query admin password).
+passwd={{ .Env.ADMIN_PASSWORD }}
+
+#The directory where the server stores game replays. (Don't forget the 
+#trailing /!) Defaults to `' which means the directory wesnothd was started in.
+replay_save_path={{ default .Env.REPLAY_SAVE_PATH "/opt/saved_replays/" }}
+
+#Defines whether the server will automatically save replays of games. (default: false)
+save_replays={{ default .Env.SAVE_REPLAYS "false" }}
+# 
+#        disallow_names
+#               Names/nicks that are not accepted by the server. * and ? from wildcard patterns are supported. See glob(7) for more
+#               details.   Default  values  (used if nothing is specified) are: *admin*,*admln*,*server*,ai,ai?,computer,human,net‐
+#               work,player.
+# 
+#        fifo_path
+#               The path to the fifo you can echo server commands into (same  as  /query  ...  from  wesnoth).   If  not  specified
+#               defaults to the compile-time path (default: /var/run/wesnothd/socket).
+# 
+#        max_messages
+#               The number of allowed messages in messages_time_period. (default: 4)
+# 
+#        messages_time_period
+#               The time period (in seconds) message flooding is detected in. (default: 10 seconds)
+# 
+# 
+# 
+#        new_room_policy
+#               Determines who can create new rooms on the server. Available values are everyone, registered, admin and nobody, and
+#               give the permission respectively to everyone, registered users, admin users or disables new room creation.  Default
+#               value is everyone.
+# 
+# 
+#        restart_command
+#               The command that the server uses to start a new server process via the restart command. (Can only be issued via the
+#               fifo. See the allow_remote_shutdown setting.)
+# 
+#        room_save_file
+#               Path  to  a file where the room info should be stored. This file is read on server startup and written to later. If
+#               empty or not set, rooms are not loaded and not saved.
+# 
+# 
+#        versions_accepted
+#               A comma separated list of version strings to be accepted by the server. * and ? from  wildcard  patterns  are  sup‐
+#               ported.  (defaults to the corresponding wesnoth version)
+#               Example: versions_accepted="*" accepts any version string.
+# 
+#        user_handler
+#               The  name  of  the user handler to use. Currently available user handlers are forum (to connect wesnothd to a phpbb
+#               forum database) and sample (a sample implementation of the user handler interface, if you use this on anything real
+#               you are insane). The default value is forum. You must also add a [user_handler] section, see below.
+# 
+# 
+# [mail] Configures an SMTP server through which the user handler can send mail. Currently only used by the sample user han‐
+#        dler.
+# 
+#               server The hostname of the mail server
+# 
+#               username
+#                      The user name under which to log into the mail server.
+# 
+#               password
+#                      This user's password.
+# 
+#               from_address
+#                      The reply-to address of you mail.
+# 
+#               mail_port
+#                      The port on which your mail server is running. Default is 25.
+# 
+#               
+#    [user_handler]  Configures the user handler. Available keys vary depending on which user handler is set with the user_han‐
+#        dler key. If no [user_handler] section is present in the configuration the server will run without any  nick  registration
+#        service.  All  additional  tables  that  are  needed  for the forum_user_handler to function can be found in table_defini‐
+#        tions.sql in the Wesnoth source repository.
+# 
+#               db_host
+#                      (for user_handler=forum) The hostname of the database server
+# 
+#               db_name
+#                      (for user_handler=forum) The name of the database
+# 
+#               db_user
+#                      (for user_handler=forum) The name of the user under which to log into the database
+# 
+#               db_password
+#                      (for user_handler=forum) This user's password
+# 
+#               db_users_table
+#                      (for user_handler=forum) The name of the table in which your phpbb forums saves its user data.  Most  likely
+#                      this will be <table-prefix>_users (e.g. phpbb3_users).
+# 
+#               db_extra_table
+#                      (for  user_handler=forum)  The  name  of the table in which wesnothd will save its own data about users. You
+#                      will have to create this table manually.
+# 
+#               db_game_info_table
+#                      (for user_handler=forum) The name of the table in which wesnothd will save its own data about games.
+# 
+#               db_game_player_info_table
+#                      (for user_handler=forum) The name of the table in which wesnothd will save its own data about the players in
+#                      a game.
+# 
+#               db_game_modification_info_table
+#                      (for  user_handler=forum) The name of the table in which wesnothd will save its own data about the modifica‐
+#                      tions used in a game.
+# 
+#               db_user_group_table
+#                      (for user_handler=forum) The name of the table in which your phpbb forums saves its user  group  data.  Most
+#                      likely this will be <table-prefix>_user_group  (e.g. phpbb3_user_group).
+# 
+#               mp_mod_group
+#                      (for user_handler=forum) The ID of the forum group to be considered as having moderation authority.
+# 
+#               user_expiration
+#                      (for user_handler=sample) The time after which a registered nick expires (in days).
